@@ -77,6 +77,8 @@ void make_it_circular(struct node *head){
 int main(){
 
 	//Test Sequences
+	int input[10] = { 10 ,15 ,20 ,30, 50, 70, 100, 200, 400, 800 };
+	int *res = find_sequences(input, 10);
 
 	//Test Circular Linked Lists
 

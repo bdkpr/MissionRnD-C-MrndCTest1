@@ -31,7 +31,57 @@ Difficulty : Medium
 #include <stdio.h>
 #include <math.h>
 
+int end_index_AP(int *, int, int, int);
+int end_index_GP(int *, int, int, int);
 int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
-	return NULL;
+	if (arr == NULL || len < 6){
+		return NULL;
+	}
+
+	int *result, index, diff, r, res_ind=0;
+	result = (int *)malloc(6 * sizeof(int));
+	for (index = 0; index < len-2;){
+		diff = arr[index + 1] - arr[index];
+		if (arr[index + 1] + diff == arr[index + 2]){
+			result[res_ind] = index;
+			res_ind++;
+			index=end_index_AP(arr, index + 1, diff, len);
+			result[res_ind] = index;
+			res_ind++;
+		}
+		else{
+			index++;
+		}
+	}
+	for (index = 0; index < len - 2;){
+		r = arr[index + 1] / arr[index];
+		if (arr[index + 1] * r == arr[index + 2]){
+			result[res_ind] = index;
+			res_ind++;
+			index = end_index_GP(arr, index + 1, r, len);
+			result[res_ind] = index;
+			res_ind++;
+		}
+		else{
+			index++;
+		}
+	}
+	return result;
+}
+int end_index_AP(int *a, int ind, int diff, int len){
+	for (; ind < len-1; ind++){
+		if (a[ind] + diff != a[ind+1]){
+			break;
+		}
+	}
+	return ind ;
+}
+int end_index_GP(int *a, int ind, int r, int len){
+	for (; ind < len-1; ind++){
+		if (a[ind] * r != a[ind + 1]){
+			break;
+		}
+	}
+	return ind ;
 }
